@@ -73,7 +73,7 @@ public final class DictionaryStore {
                 sqlite3_bind_text(statement, 2, entry.word, -1, sqliteTransient)
                 for (index, sense) in entry.senses.enumerated() {
                     if let pos = sense.pos {
-                        sqlite3_bind_text(statement, 3, pos, -1, sqliteTransient)
+                        sqlite3_bind_text(statement, 3, pos.rawValue, -1, sqliteTransient)
                     } else {
                         sqlite3_bind_null(statement, 3)
                     }

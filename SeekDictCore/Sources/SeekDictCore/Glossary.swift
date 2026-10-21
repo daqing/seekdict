@@ -20,11 +20,31 @@ public enum TranslationDirection: String, CaseIterable {
     case chineseToEnglish = "zh-en"
 }
 
+public enum GlossaryParseError: Error, Equatable, CustomStringConvertible {
+    case missingWord(line: Int)
+    case missingSense(line: Int)
+    case tooManySenses(line: Int, count: Int)
+    case invalidPartOfSpeech(line: Int, value: String)
+
+    public var description: String {
+        switch self {
+        case .missingWord(let line):
+            return "line \(line): missing word"
+        case .missingSense(let line):
+            return "line \(line): missing sense"
+        case .tooManySenses(let line, let count):
+            return "line \(line): \(count) senses, at most 2 allowed"
+        case .invalidPartOfSpeech(let line, let value):
+            return "line \(line): invalid part of speech '\(value)'"
+        }
+    }
+}
+
 public struct GlossarySense: Equatable {
-    public let pos: String?
+    public let pos: PartOfSpeech?
     public let text: String
 
-    public init(pos: String?, text: String) {
+    public init(pos: PartOfSpeech?, text: String) {
         self.pos = pos
         self.text = text
     }
@@ -40,6 +60,12 @@ public struct GlossaryEntry: Equatable {
     }
 }
 
+public struct GlossaryParseOutcome: Equatable {
+    public let entries: [GlossaryEntry]
+    public let totalLines: Int
+    public let skippedLines: Int
+}
+
 public struct ImportReport: Equatable {
     public let direction: TranslationDirection
     public let linesRead: Int
@@ -49,35 +75,51 @@ public struct ImportReport: Equatable {
     public let duration: TimeInterval
 }
 
-public struct GlossaryParseOutcome: Equatable {
-    public let entries: [GlossaryEntry]
-    public let totalLines: Int
-    public let skippedLines: Int
-}
-
 public enum GlossaryParser {
+    private static let posPrefixPattern = #"^([a-z]+\.) (.*)$"#
+
     public static func parse(contents: String) throws -> GlossaryParseOutcome {
         var entries: [GlossaryEntry] = []
         var totalLines = 0
         var skippedLines = 0
         let trimmed = contents.hasSuffix("\n") ? String(contents.dropLast()) : contents
-        for line in trimmed.split(separator: "\n", omittingEmptySubsequences: false) {
+        for (index, line) in trimmed.split(separator: "\n", omittingEmptySubsequences: false).enumerated() {
+            let lineNumber = index + 1
             totalLines += 1
             guard !line.isEmpty, !line.hasPrefix("#") else {
                 skippedLines += 1
                 continue
             }
-            let fields = line.split(separator: "\t", omittingEmptySubsequences: false).map(String.init)
-            let senses = fields.dropFirst().map(parseSense(_:))
-            entries.append(GlossaryEntry(word: fields[0], senses: senses))
+            entries.append(try parseLine(line, lineNumber: lineNumber))
         }
         return GlossaryParseOutcome(entries: entries, totalLines: totalLines, skippedLines: skippedLines)
     }
 
-    static func parseSense(_ field: String) -> GlossarySense {
-        if let spaceIndex = field.firstIndex(of: " "),
-           field[field.startIndex..<spaceIndex].range(of: #"^[a-z]+\.$"#, options: .regularExpression) != nil {
-            let pos = String(field[field.startIndex..<spaceIndex])
+    static func parseLine(_ line: Substring, lineNumber: Int) throws -> GlossaryEntry {
+        let fields = line.split(separator: "\t", omittingEmptySubsequences: false).map(String.init)
+        guard fields.count >= 2 else {
+            throw GlossaryParseError.missingSense(line: lineNumber)
+        }
+        guard fields.count <= 3 else {
+            throw GlossaryParseError.tooManySenses(line: lineNumber, count: fields.count - 1)
+        }
+        guard !fields[0].isEmpty else {
+            throw GlossaryParseError.missingWord(line: lineNumber)
+        }
+        let senses = try fields[1...].map { try parseSense($0, lineNumber: lineNumber) }
+        return GlossaryEntry(word: fields[0], senses: senses)
+    }
+
+    static func parseSense(_ field: String, lineNumber: Int) throws -> GlossarySense {
+        guard !field.isEmpty else {
+            throw GlossaryParseError.missingSense(line: lineNumber)
+        }
+        if let match = field.range(of: posPrefixPattern, options: .regularExpression) {
+            let spaceIndex = field.firstIndex(of: " ")!
+            let rawPos = String(field[match.lowerBound..<spaceIndex])
+            guard let pos = PartOfSpeech(rawValue: rawPos) else {
+                throw GlossaryParseError.invalidPartOfSpeech(line: lineNumber, value: rawPos)
+            }
             let text = String(field[field.index(after: spaceIndex)...])
             return GlossarySense(pos: pos, text: text)
         }
