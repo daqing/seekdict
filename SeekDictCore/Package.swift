@@ -12,7 +12,13 @@ let package = Package(
         .library(name: "SeekDictCore", targets: ["SeekDictCore"]),
     ],
     targets: [
-        .target(name: "SeekDictCore"),
+        .target(
+            name: "SeekDictCore",
+            linkerSettings: [
+                .linkedLibrary("sqlite3"),
+            ]
+        ),
+        .testTarget(name: "SeekDictCoreTests", dependencies: ["SeekDictCore"]),
     ],
     swiftLanguageVersions: [.v5]
 )
