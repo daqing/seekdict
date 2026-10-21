@@ -1,9 +1,10 @@
 import SwiftUI
 import Playgrounds
+import SeekDictCore
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
+        Text("SeekDictCore \(SeekDictCore.version)")
             .padding()
     }
 }
