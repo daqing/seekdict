@@ -13,10 +13,10 @@
 
 | 编号 | 任务 | 完成标准 |
 |---|---|---|
-| T1.1 | 建共享核心模块（Swift Package 或 framework target），macOS / iOS 两个 App target 都链接它 | 核心编译一次，两个 App 都能 import |
-| T1.2 | 选型并接入 SQLite 访问层（先评估 GRDB / SQLite.swift / 系统 C API） | 选定、加入 core、能打开 DB 文件 |
-| T1.3 | 给 core 建单元测试 target | 两个平台的 scheme 都能跑通一个 trivial 测试 |
-| T1.4 | UI 分层骨架验证：一个 AppKit 视图经 `NSViewRepresentable` 挂进 SwiftUI 窗口，一个 UIKit 视图经 `UIViewRepresentable` 挂进页面 | 两个平台都能编译渲染 |
+| T1.1 | [x] 建共享核心模块（Swift Package 或 framework target），macOS / iOS 两个 App target 都链接它 | 核心编译一次，两个 App 都能 import |
+| T1.2 | [x] 选型并接入 SQLite 访问层（先评估 GRDB / SQLite.swift / 系统 C API） | 选定、加入 core、能打开 DB 文件 |
+| T1.3 | [x] 给 core 建单元测试 target | 两个平台的 scheme 都能跑通一个 trivial 测试 |
+| T1.4 | [x] UI 分层骨架验证：一个 AppKit 视图经 `NSViewRepresentable` 挂进 SwiftUI 窗口，一个 UIKit 视图经 `UIViewRepresentable` 挂进页面 | 两个平台都能编译渲染 |
 
 ## T2. 词典数据与引擎（离线核心）
 
