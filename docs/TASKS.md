@@ -22,12 +22,12 @@ Milestones:
 
 | ID | Task | Done when |
 |---|---|---|
-| T2.1 | Vendor the two qingjian TSVs (`glossary-zh.tsv`, `glossary-en.tsv`) into `data/` with a README noting source and GPL license | Files in repo, license note present |
-| T2.2 | SQLite schema for `entries` (direction, word, pos, sense, sense_order) + first-launch import of the TSVs into the app DB | Fresh install imports without error |
-| T2.3 | Strict TSV parser: POS enum validation, ≤2 senses, fail-fast on malformed lines + unit tests covering edge cases | Parser + tests green |
-| T2.4 | Lookup layer: exact-match query per direction, lowercase normalization for en→zh keys + unit tests | `lookup("Abandon")` finds `abandon` |
-| T2.5 | Import validation report (count of skipped lines) and a rough lookup-latency check on device | Report logged; lookup < 10 ms |
-| T2.6 | `DictionaryService` facade: single entry point used by all UI, guaranteed to work in airplane mode | macOS window shows a result offline |
+| T2.1 | [x] Vendor the two qingjian TSVs (`glossary-zh.tsv`, `glossary-en.tsv`) into `data/` with a README noting source and GPL license | Files in repo, license note present |
+| T2.2 | [x] SQLite schema for `entries` (direction, word, pos, sense, sense_order) + first-launch import of the TSVs into the app DB | Fresh install imports without error |
+| T2.3 | [x] Strict TSV parser: POS enum validation, ≤2 senses, fail-fast on malformed lines + unit tests covering edge cases | Parser + tests green |
+| T2.4 | [x] Lookup layer: exact-match query per direction, lowercase normalization for en→zh keys + unit tests | `lookup("Abandon")` finds `abandon` |
+| T2.5 | [x] Import validation report (count of skipped lines) and a rough lookup-latency check on device | Report logged; lookup < 10 ms |
+| T2.6 | [x] `DictionaryService` facade: single entry point used by all UI, guaranteed to work in airplane mode | macOS window shows a result offline |
 
 ## T3. Backend API client (shared core)
 
