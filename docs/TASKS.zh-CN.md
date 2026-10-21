@@ -22,12 +22,12 @@
 
 | 编号 | 任务 | 完成标准 |
 |---|---|---|
-| T2.1 | 引入 qingjian 的两张 TSV（`glossary-zh.tsv`、`glossary-en.tsv`）到 `data/`，附 README 注明来源与 GPL 许可证 | 文件入仓，附许可证说明 |
-| T2.2 | SQLite `entries` 表结构（direction、word、pos、sense、sense_order）+ 首次启动导入 TSV 到应用 DB | 全新安装导入无报错 |
-| T2.3 | 严格 TSV 解析器：词性枚举校验、每词 ≤2 义项、坏行 fail-fast + 覆盖边界的单元测试 | 解析器 + 测试全绿 |
-| T2.4 | 查询层：按方向精确匹配，en→zh 键统一小写归一化 + 单元测试 | `lookup("Abandon")` 能查到 `abandon` |
-| T2.5 | 导入校验报告（跳过行数统计）+ 真机查词耗时的粗测 | 有日志报告；查询 < 10 ms |
-| T2.6 | `DictionaryService` 门面：所有 UI 统一入口，保证飞行模式下可用 | 断网时 macOS 窗口能显示释义 |
+| T2.1 | [x] 引入 qingjian 的两张 TSV（`glossary-zh.tsv`、`glossary-en.tsv`）到 `data/`，附 README 注明来源与 GPL 许可证 | 文件入仓，附许可证说明 |
+| T2.2 | [x] SQLite `entries` 表结构（direction、word、pos、sense、sense_order）+ 首次启动导入 TSV 到应用 DB | 全新安装导入无报错 |
+| T2.3 | [x] 严格 TSV 解析器：词性枚举校验、每词 ≤2 义项、坏行 fail-fast + 覆盖边界的单元测试 | 解析器 + 测试全绿 |
+| T2.4 | [x] 查询层：按方向精确匹配，en→zh 键统一小写归一化 + 单元测试 | `lookup("Abandon")` 能查到 `abandon` |
+| T2.5 | [x] 导入校验报告（跳过行数统计）+ 真机查词耗时的粗测 | 有日志报告；查询 < 10 ms |
+| T2.6 | [x] `DictionaryService` 门面：所有 UI 统一入口，保证飞行模式下可用 | 断网时 macOS 窗口能显示释义 |
 
 ## T3. 后台 API client（共享核心）
 

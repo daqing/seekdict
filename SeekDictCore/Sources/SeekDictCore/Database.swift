@@ -3,11 +3,14 @@ import SQLite3
 
 public enum DatabaseError: Error, CustomStringConvertible {
     case openFailed(String)
+    case executeFailed(String)
 
     public var description: String {
         switch self {
         case .openFailed(let message):
             return "failed to open database: \(message)"
+        case .executeFailed(let message):
+            return "failed to execute statement: \(message)"
         }
     }
 }
@@ -44,5 +47,28 @@ public final class Database {
 
     deinit {
         close()
+    }
+
+    public func execute(_ sql: String) throws {
+        var errorMessage: UnsafeMutablePointer<CChar>?
+        let result = sqlite3_exec(handle, sql, nil, nil, &errorMessage)
+        guard result == SQLITE_OK else {
+            let message = errorMessage.map { String(cString: $0) } ?? "unknown error"
+            sqlite3_free(errorMessage)
+            throw DatabaseError.executeFailed(message)
+        }
+    }
+
+    func prepareStatement(_ sql: String) throws -> OpaquePointer? {
+        var statement: OpaquePointer?
+        let result = sqlite3_prepare_v2(handle, sql, -1, &statement, nil)
+        guard result == SQLITE_OK else {
+            throw DatabaseError.executeFailed(lastErrorMessage)
+        }
+        return statement
+    }
+
+    var lastErrorMessage: String {
+        handle.map { String(cString: sqlite3_errmsg($0)) } ?? "unknown error"
     }
 }
