@@ -75,6 +75,15 @@ public struct ImportReport: Equatable {
     public let duration: TimeInterval
 }
 
+extension ImportReport: CustomStringConvertible {
+    public var description: String {
+        String(
+            format: "glossary %@: read %d lines, skipped %d, imported %d entries (%d senses) in %.2fs",
+            direction.rawValue, linesRead, skippedLines, importedEntries, importedSenses, duration
+        )
+    }
+}
+
 public enum GlossaryParser {
     private static let posPrefixPattern = #"^([a-z]+\.) (.*)$"#
 
