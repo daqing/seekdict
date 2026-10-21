@@ -13,10 +13,10 @@ Milestones:
 
 | ID | Task | Done when |
 |---|---|---|
-| T1.1 | Create a shared core module (Swift package or framework target) linked by both the macOS and iOS app targets | Core builds once, both apps import it |
-| T1.2 | Pick and integrate a SQLite access layer (evaluate GRDB / SQLite.swift / system C API first) | Chosen, added to core, opens a DB file |
-| T1.3 | Add a unit-test target for the core module | One trivial test runs in both platform schemes |
-| T1.4 | Skeleton proof of the UI split: one AppKit view wrapped via `NSViewRepresentable` in a SwiftUI window, one UIKit view via `UIViewRepresentable` | Builds and renders on both platforms |
+| T1.1 | [x] Create a shared core module (Swift package or framework target) linked by both the macOS and iOS app targets | Core builds once, both apps import it |
+| T1.2 | [x] Pick and integrate a SQLite access layer (evaluate GRDB / SQLite.swift / system C API first) | Chosen, added to core, opens a DB file |
+| T1.3 | [x] Add a unit-test target for the core module | One trivial test runs in both platform schemes |
+| T1.4 | [x] Skeleton proof of the UI split: one AppKit view wrapped via `NSViewRepresentable` in a SwiftUI window, one UIKit view via `UIViewRepresentable` | Builds and renders on both platforms |
 
 ## T2. Dictionary data & engine (offline core)
 
