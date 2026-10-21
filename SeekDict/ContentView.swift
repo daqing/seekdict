@@ -12,7 +12,7 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
         }
         .padding()
-        .frame(width: 320)
+        .frame(width: 360, height: 280)
     }
 }
 
