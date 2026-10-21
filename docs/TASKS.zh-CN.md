@@ -33,11 +33,11 @@
 
 | 编号 | 任务 | 完成标准 |
 |---|---|---|
-| T3.1 | 定义契约模型（`Item`、`HotItem`、`Article`、错误），与 `docs/README.md` 对齐 | Codable 编译通过，字段与契约文档一致 |
-| T3.2 | REST client：`/v1/search/news`、`/v1/search/weibo`、`/v1/hot`、`/v1/article` 四个端点 + bearer token 注入 + mock transport 测试 | 四个调用在测试里全部通过 |
-| T3.3 | 错误映射：401 → 重新登录信号；402 → 用户提示；429/5xx → 指数退避；其他 4xx → 不重试 + 测试 | 行为在测试中验证 |
-| T3.4 | `news_cache` 表（word、payload_json、fetched_at），按板块设 TTL + 测试 | 相同查询在 TTL 内命中缓存 |
-| T3.5 | 共享的 Markdown → attributed string 渲染器（阅读视图用） | 两个平台都能渲染标题/链接/列表 |
+| T3.1 | [x] 定义契约模型（`Item`、`HotItem`、`Article`、错误），与 `docs/README.md` 对齐 | Codable 编译通过，字段与契约文档一致 |
+| T3.2 | [x] REST client：`/v1/search/news`、`/v1/search/weibo`、`/v1/hot`、`/v1/article` 四个端点 + bearer token 注入 + mock transport 测试 | 四个调用在测试里全部通过 |
+| T3.3 | [x] 错误映射：401 → 重新登录信号；402 → 用户提示；429/5xx → 指数退避；其他 4xx → 不重试 + 测试 | 行为在测试中验证 |
+| T3.4 | [x] `news_cache` 表（word、payload_json、fetched_at），按板块设 TTL + 测试 | 相同查询在 TTL 内命中缓存 |
+| T3.5 | [x] 共享的 Markdown → attributed string 渲染器（阅读视图用） | 两个平台都能渲染标题/链接/列表 |
 
 ## T4. macOS 宿主（AppKit）
 

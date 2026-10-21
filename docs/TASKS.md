@@ -33,11 +33,11 @@ Milestones:
 
 | ID | Task | Done when |
 |---|---|---|
-| T3.1 | Define contract models (`Item`, `HotItem`, `Article`, errors) matching `docs/README.md` | Codables compile, match contract doc |
-| T3.2 | REST client: endpoints `/v1/search/news`, `/v1/search/weibo`, `/v1/hot`, `/v1/article` + bearer token injection + tests with a mock transport | All four calls work in tests |
-| T3.3 | Error mapping: 401 → re-login signal, 402 → user notice, 429/5xx → exponential backoff, other 4xx → no retry + tests | Behavior verified in tests |
-| T3.4 | `news_cache` table (word, payload_json, fetched_at) with per-section TTL + tests | Second identical query hits cache until TTL expires |
-| T3.5 | Shared Markdown → attributed string renderer for the reading view | Renders headings/links/lists on both platforms |
+| T3.1 | [x] Define contract models (`Item`, `HotItem`, `Article`, errors) matching `docs/README.md` | Codables compile, match contract doc |
+| T3.2 | [x] REST client: endpoints `/v1/search/news`, `/v1/search/weibo`, `/v1/hot`, `/v1/article` + bearer token injection + tests with a mock transport | All four calls work in tests |
+| T3.3 | [x] Error mapping: 401 → re-login signal, 402 → user notice, 429/5xx → exponential backoff, other 4xx → no retry + tests | Behavior verified in tests |
+| T3.4 | [x] `news_cache` table (word, payload_json, fetched_at) with per-section TTL + tests | Second identical query hits cache until TTL expires |
+| T3.5 | [x] Shared Markdown → attributed string renderer for the reading view | Renders headings/links/lists on both platforms |
 
 ## T4. macOS host (AppKit)
 
