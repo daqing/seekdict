@@ -1,7 +1,7 @@
 import Foundation
 import SQLite3
 
-private let sqliteTransient = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+let sqliteTransient = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
 public final class DictionaryStore {
     public let database: Database
